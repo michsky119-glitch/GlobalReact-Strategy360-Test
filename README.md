@@ -110,13 +110,19 @@ So for a quick “run the app on GCP” you can use Option A (single VM + Docker
 - `PUT /api/tasks/:id` – update (body: `{ "title": "...", "description": "..." }`)
 - `DELETE /api/tasks/:id` – delete
 
-## Improvement directions
+## Improvement directions (functional, modern todo-app style)
 
-- **Auth** – Add user sign-up/sign-in and scope tasks per user (e.g. JWT + PostgreSQL user/task tables).
-- **Data** – Swap SQLite for PostgreSQL (or Cloud SQL) for production and multi-instance deployments.
-- **UX** – Task reorder (drag-and-drop), filters (all/active/done), due dates, and optional categories/tags.
-- **Quality** – Unit tests for API (e.g. Jest + supertest) and frontend (e.g. React Testing Library); basic E2E with Playwright.
-- **DevOps** – CI (e.g. GitHub Actions: lint, test, build); optional staging/production pipelines and health checks.
+- **Completed state** – Mark tasks done (checkbox) and keep them in the list; filter views: All / Active / Completed; optional “clear completed”.
+- **Due dates and reminders** – Optional due date per task, sort or filter by due; optional reminder (e.g. notify on due or at a set time).
+- **Priority** – Priority field (e.g. none / low / medium / high) with sort and filter; optional priority-based ordering in the list.
+- **Subtasks** – Break a task into sub-items with their own completed state; show progress (e.g. “2/5 done”) in the main list.
+- **Recurring tasks** – Repeat rule (daily, weekly, monthly, custom) so the task reappears after completion.
+- **Search and filter** – Full-text search on title/description; filter by date range, priority, or tags.
+- **Tags or lists** – Optional tags or “lists” (e.g. Work, Personal) to group tasks without replacing the single-list view.
+- **Reorder** – Drag-and-drop or up/down controls to reorder tasks; persist order (e.g. `position` column or ordered IDs).
+- **Keyboard and shortcuts** – Quick add (e.g. focus input on “N”), mark complete (e.g. Space on focused row), delete (e.g. Backspace), and optional command palette.
+- **Undo** – Undo last delete or bulk complete (e.g. toast with “Undo” or a small history buffer).
+- **Persistence and sync** – Keep current SQLite for local; add optional sync (e.g. per-user backend with PostgreSQL) so the same features work across devices.
 
 ## Tech
 
