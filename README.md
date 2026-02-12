@@ -110,6 +110,14 @@ So for a quick “run the app on GCP” you can use Option A (single VM + Docker
 - `PUT /api/tasks/:id` – update (body: `{ "title": "...", "description": "..." }`)
 - `DELETE /api/tasks/:id` – delete
 
+## Improvement directions
+
+- **Auth** – Add user sign-up/sign-in and scope tasks per user (e.g. JWT + PostgreSQL user/task tables).
+- **Data** – Swap SQLite for PostgreSQL (or Cloud SQL) for production and multi-instance deployments.
+- **UX** – Task reorder (drag-and-drop), filters (all/active/done), due dates, and optional categories/tags.
+- **Quality** – Unit tests for API (e.g. Jest + supertest) and frontend (e.g. React Testing Library); basic E2E with Playwright.
+- **DevOps** – CI (e.g. GitHub Actions: lint, test, build); optional staging/production pipelines and health checks.
+
 ## Tech
 
 - Backend: Node.js, Express, better-sqlite3
