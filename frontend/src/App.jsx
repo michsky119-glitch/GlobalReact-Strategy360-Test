@@ -76,65 +76,79 @@ function App() {
 
   return (
     <div className="app">
-      <h1>To-Do List</h1>
+      <header className="header">
+        <h1>Tasks</h1>
+        <p className="sub">Add and manage your to-dos</p>
+      </header>
       <form onSubmit={handleSubmit} className="add-form">
+        <label htmlFor="new-title">Title</label>
         <input
+          id="new-title"
           type="text"
-          placeholder="Title"
+          placeholder="What needs to be done?"
           value={title}
           onChange={e => setTitle(e.target.value)}
           maxLength={255}
         />
+        <label htmlFor="new-desc">Description</label>
         <textarea
-          placeholder="Description (optional)"
+          id="new-desc"
+          placeholder="Optional details"
           value={description}
           onChange={e => setDescription(e.target.value)}
           rows={2}
         />
-        <button type="submit">Add task</button>
+        <button type="submit" className="btn-submit" disabled={!title.trim()}>
+          Add task
+        </button>
       </form>
       {loading ? (
-        <p className="muted">Loading...</p>
+        <p className="muted">Loading…</p>
       ) : tasks.length === 0 ? (
         <p className="muted">No tasks yet. Add one above.</p>
       ) : (
-        <ul className="task-list">
-          {tasks.map(task => (
-            <li key={task.id}>
-              {editingId === task.id ? (
-                <div className="edit-box">
-                  <input
-                    value={editTitle}
-                    onChange={e => setEditTitle(e.target.value)}
-                    maxLength={255}
-                  />
-                  <textarea
-                    value={editDesc}
-                    onChange={e => setEditDesc(e.target.value)}
-                    rows={2}
-                  />
-                  <div className="edit-actions">
-                    <button onClick={saveEdit}>Save</button>
-                    <button type="button" onClick={cancelEdit}>Cancel</button>
+        <>
+          <ul className="task-list">
+            {tasks.map(task => (
+              <li key={task.id}>
+                {editingId === task.id ? (
+                  <div className="edit-box">
+                    <input
+                      value={editTitle}
+                      onChange={e => setEditTitle(e.target.value)}
+                      maxLength={255}
+                      placeholder="Title"
+                    />
+                    <textarea
+                      value={editDesc}
+                      onChange={e => setEditDesc(e.target.value)}
+                      rows={2}
+                      placeholder="Description"
+                    />
+                    <div className="edit-actions">
+                      <button type="button" onClick={saveEdit} className="btn-save">Save</button>
+                      <button type="button" onClick={cancelEdit} className="btn-cancel">Cancel</button>
+                    </div>
                   </div>
-                </div>
-              ) : (
-                <>
-                  <div className="task-content">
-                    <span className="task-title">{task.title}</span>
-                    {task.description && (
-                      <span className="task-desc">{task.description}</span>
-                    )}
-                  </div>
-                  <div className="task-actions">
-                    <button onClick={() => startEdit(task)}>Edit</button>
-                    <button onClick={() => handleDelete(task.id)} className="btn-danger">Delete</button>
-                  </div>
-                </>
-              )}
-            </li>
-          ))}
-        </ul>
+                ) : (
+                  <>
+                    <div className="task-content">
+                      <span className="task-title">{task.title}</span>
+                      {task.description && (
+                        <span className="task-desc">{task.description}</span>
+                      )}
+                    </div>
+                    <div className="task-actions">
+                      <button type="button" onClick={() => startEdit(task)}>Edit</button>
+                      <button type="button" onClick={() => handleDelete(task.id)} className="btn-danger">Delete</button>
+                    </div>
+                  </>
+                )}
+              </li>
+            ))}
+          </ul>
+          <p className="task-count">{tasks.length} {tasks.length === 1 ? 'task' : 'tasks'}</p>
+        </>
       )}
     </div>
   )
